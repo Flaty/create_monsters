@@ -42,9 +42,7 @@ def change_letter(skill, letter_mapping):
     for word_skill in skill:
         transformed_letters = []
         for letter in word_skill:
-            print(letter)
             letter = letter_mapping.get(letter, letter)
-            print(letter + ' get')
             transformed_letters.append(letter)
         transformed_skill = ''.join(transformed_letters)
         transformed_skills.append(transformed_skill)
