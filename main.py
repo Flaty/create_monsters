@@ -36,21 +36,20 @@ letter_mapping = {
 runic_skills = []
 
 
-def change_letter(letter_skill, mapping):
+def change_letter(skill, letter_mapping):
 
-    word_list = []
-    word = []
-    for word_skill in letter_skill:
-        letters = []
+    transformed_skills = []
+    for word_skill in skill:
+        transformed_letters = []
         for letter in word_skill:
-            for map, let in mapping.items():
-                if letter == map:
-                    letter = let
-            letters.append(letter)
-        word = ''.join(letters)
-        word_list.append(word)
+            print(letter)
+            letter = letter_mapping.get(letter, letter)
+            print(letter + ' get')
+            transformed_letters.append(letter)
+        transformed_skill = ''.join(transformed_letters)
+        transformed_skills.append(transformed_skill)
 
-    return word_list
+    return transformed_skills
 
 
 def main():
@@ -64,7 +63,8 @@ def main():
         fake_skill_1, fake_skill_2, fake_skill_3 = sample(runic_skills, 3)
         runic_skills = sample(change_letter(skills, letter_mapping), 3)
         render_template(r'src\charsheet.svg', fr'output\svg\output-{i+1}.svg',
-        {'first_name': fake.first_name(),
+        {
+         'first_name': fake.first_name(),
          'last_name':  fake.last_name(),
          'job': fake.job(),
          'town': fake.city(),
@@ -75,7 +75,8 @@ def main():
          'luck': randint(3, 18),
          'skill_1': fake_skill_1,
          'skill_2': fake_skill_2,
-         'skill_3': fake_skill_3})
+         'skill_3': fake_skill_3
+         })
 
 
 if __name__ == '__main__':
