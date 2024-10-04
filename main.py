@@ -54,13 +54,12 @@ def main():
     runic_skills = change_letter(skills, letter_mapping)
     fake = Faker('ru_RU')
 
-    if not os.path.exists(r'output\svg'):
-        os.makedirs(r'output\svg')
+    os.makedirs(os.path.join('output', 'svg'), exist_ok = True)
 
     for i in range(10):
         fake_skill_1, fake_skill_2, fake_skill_3 = sample(runic_skills, 3)
         runic_skills = sample(change_letter(skills, letter_mapping), 3)
-        render_template(r'src\charsheet.svg', fr'output\svg\output-{i+1}.svg',
+        render_template(os.path.join('src', 'charsheet.svg' ), os.path.join('output', 'svg', f'output-{i+1}.svg'),
         {
          'first_name': fake.first_name(),
          'last_name':  fake.last_name(),
@@ -76,6 +75,7 @@ def main():
          'skill_3': fake_skill_3
          })
         
+
 
 if __name__ == '__main__':
     main()
