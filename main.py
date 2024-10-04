@@ -75,6 +75,7 @@ def main():
          'skill_2': fake_skill_2,
          'skill_3': fake_skill_3
          })
+        
 
 
 if __name__ == '__main__':
