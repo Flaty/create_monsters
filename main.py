@@ -3,12 +3,19 @@ from faker import Faker
 from random import randint, sample
 import os
 
-skills = ['Стремительный прыжок', 'Электрический выстрел', 'Ледяной удар',
-          'Стремительный удар', 'Кислотный взгляд', 'Тайный побег',
-          'Ледяной выстрел', 'Огненный заряд']
+SKILLS = [
+    'Стремительный прыжок',
+    'Электрический выстрел',
+    'Ледяной удар',
+    'Стремительный удар',
+    'Кислотный взгляд',
+    'Тайный побег',
+    'Ледяной выстрел',
+    'Огненный заряд'
+    ]
 
 
-letter_mapping = {
+LETTER_MAPPING = {
     'а': 'а͠', 'б': 'б̋', 'в': 'в͒͠',
     'г': 'г͒͠', 'д': 'д̋', 'е': 'е͠',
     'ё': 'ё͒͠', 'ж': 'ж͒', 'з': 'з̋̋͠',
@@ -33,15 +40,14 @@ letter_mapping = {
     'Э': 'Э͒͠͠', 'Ю': 'Ю̋͠', 'Я': 'Я̋',
     ' ': ' '
 }
-runic_skills = []
 
 
-def change_letter(skill, letter_mapping):
+def change_letter(skills, letter_mapping):
 
     transformed_skills = []
-    for word_skill in skill:
+    for skill in skills:
         transformed_letters = []
-        for letter in word_skill:
+        for letter in skill:
             letter = letter_mapping.get(letter, letter)
             transformed_letters.append(letter)
         transformed_skill = ''.join(transformed_letters)
@@ -51,30 +57,31 @@ def change_letter(skill, letter_mapping):
 
 
 def main():
-    runic_skills = change_letter(skills, letter_mapping)
+    runic_skills = change_letter(SKILLS, LETTER_MAPPING)
     fake = Faker('ru_RU')
 
-    os.makedirs(os.path.join('output', 'svg'), exist_ok = True)
+    os.makedirs(os.path.join('output', 'svg'), exist_ok=True)
 
     for i in range(10):
         fake_skill_1, fake_skill_2, fake_skill_3 = sample(runic_skills, 3)
-        runic_skills = sample(change_letter(skills, letter_mapping), 3)
-        render_template(os.path.join('src', 'charsheet.svg' ), os.path.join('output', 'svg', f'output-{i+1}.svg'),
-        {
-         'first_name': fake.first_name(),
-         'last_name':  fake.last_name(),
-         'job': fake.job(),
-         'town': fake.city(),
-         'strength': randint(3, 18),
-         'agility': randint(3, 18),
-         'endurance': randint(3, 18),
-         'intelligence': randint(3, 18),
-         'luck': randint(3, 18),
-         'skill_1': fake_skill_1,
-         'skill_2': fake_skill_2,
-         'skill_3': fake_skill_3
-         })
-        
+
+        render_template(
+            os.path.join('src', 'charsheet.svg'),
+            os.path.join('output', 'svg', f'output-{i+1}.svg'),
+            {
+                'first_name': fake.first_name(),
+                'last_name':  fake.last_name(),
+                'job': fake.job(),
+                'town': fake.city(),
+                'strength': randint(3, 18),
+                'agility': randint(3, 18),
+                'endurance': randint(3, 18),
+                'intelligence': randint(3, 18),
+                'luck': randint(3, 18),
+                'skill_1': fake_skill_1,
+                'skill_2': fake_skill_2,
+                'skill_3': fake_skill_3
+            })
 
 
 if __name__ == '__main__':
